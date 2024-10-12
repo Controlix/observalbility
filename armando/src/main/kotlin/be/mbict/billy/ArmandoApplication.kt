@@ -1,4 +1,4 @@
-package be.mbict.billy
+package be.mbict.armando
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

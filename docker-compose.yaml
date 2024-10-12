@@ -46,3 +46,17 @@ services:
       - GF_AUTH_DISABLE_LOGIN_FORM=true
     ports:
       - "3000:3000"
+
+  artemis:
+    image: apache/activemq-artemis
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+    environment:
+      ARTEMIS_USER: admin
+      ARTEMIS_PASSWORD: superman
+    volumes:
+      - artemis_data:/var/lib/artemis/data
+
+volumes:
+  artemis_data:

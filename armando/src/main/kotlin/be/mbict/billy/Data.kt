@@ -1,7 +1,6 @@
-package be.mbict.billy
+package be.mbict.armando
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.slf4j.LoggerFactory
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -14,19 +13,19 @@ private val log = KotlinLogging.logger {}
 @RestController
 @RequestMapping("/data")
 class Controller(
-    private val billy: RestTemplate
+    private val restTemplate: RestTemplate
 ) {
 
     @GetMapping
     fun getAllData(): ResponseEntity<Array<Data>> {
         log.info { "Getting all data..." }
-        return billy.getForEntity("/data", Array<Data>::class.java)
+        return restTemplate.getForEntity("http://localhost:8081/data", Array<Data>::class.java)
     }
 
     @PostMapping
     fun addData(@RequestBody data: Data): ResponseEntity<String> {
         log.info { "Adding data $data ..." }
-        return billy.postForEntity("/data", data, String::class.java)
+        return restTemplate.postForEntity("http://localhost:8082/data", data, String::class.java)
     }
 }
 
@@ -39,5 +38,5 @@ data class Data(
 internal class DataConfig {
 
     @Bean
-    internal fun restTemplate(restTemplateBuilder: RestTemplateBuilder) = restTemplateBuilder.rootUri("http://localhost:8081").build()
+    internal fun restTemplate(restTemplateBuilder: RestTemplateBuilder) = restTemplateBuilder.build()
 }
